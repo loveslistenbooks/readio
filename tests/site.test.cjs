@@ -76,7 +76,7 @@ test('page has meaningful no-JS content and native accessible controls', () => {
 test('public configuration is loadable and contains no fake store URL', () => {
   const context = { window: {} };
   vm.runInNewContext(fs.readFileSync(path.join(site, 'site.config.js'), 'utf8'), context);
-  assert.deepEqual(Object.keys(context.window.SITE_CONFIG).sort(), ['appStoreURL', 'privacyURL', 'supportEmail', 'termsURL']);
+  assert.deepEqual(Object.keys(context.window.SITE_CONFIG).sort(), ['appStoreURL', 'autoRenewalURL', 'membershipURL', 'privacyURL', 'supportEmail', 'termsURL']);
   const store = context.window.SITE_CONFIG.appStoreURL;
   assert.ok(store === '' || /^https:\/\/apps\.apple\.com\/.+id\d+/.test(store), 'Use an empty value or a real App Store URL');
 });
@@ -189,5 +189,21 @@ test('detail screenshot links have valid no-JS poster fallbacks, not fake intera
   for (const [tag, id] of links) {
     assert.ok(tag.includes(`href="assets/en/${id}-poster.webp"`));
     assert.ok(content.en.features.some(feature => feature.id === id));
+  }
+});
+
+test('homepage policy entry links to membership and auto-renewal agreements', () => {
+  const html = fs.readFileSync(path.join(site, 'index.html'), 'utf8');
+  assert.ok(html.includes('class="policy-links"'));
+  assert.ok(html.includes(content.en.legalEntryTitle));
+  assert.ok(html.includes(content.zh.legalEntryTitle) || html.includes('data-i18n="legalEntryTitle"'));
+  for (const [key, label] of [['membershipURL', 'footerMembership'], ['autoRenewalURL', 'footerAutoRenewal']]) {
+    const tags = [...html.matchAll(new RegExp(`<a\\b[^>]*data-config-link="${key}"[^>]*>`, 'g'))].map(match => match[0]);
+    assert.equal(tags.length, 2, key);
+    for (const tag of tags) {
+      assert.ok(!/\bhidden\b/.test(tag), key);
+      assert.ok(tag.includes(`href="${links.resolve(key, config).href}"`), key);
+      assert.ok(tag.includes(`data-i18n="${label}"`), key);
+    }
   }
 });

@@ -1,6 +1,6 @@
 # 隐私政策与使用条款：依据及发布确认
 
-整理日期：2026-10-09。适用品牌：**爱听书 / Readio**。联系邮箱：**listenbook999@outlook.com**。
+整理日期：2026-10-12。适用品牌：**爱听书 / Readio**。联系邮箱：**listenbook999@outlook.com**。
 
 本目录已包含可以直接预览、随静态官网一起部署的页面；这份说明是给维护者的核对清单，不是政策正文，也不代表已完成法务、完整 SDK 或线上服务审计。GitHub Actions 的公开文件白名单不会打包本说明。
 
@@ -27,6 +27,8 @@
 | 麦克风与语音识别用途 | `lovelistenbooks-Info.plist` 的权限说明 |
 | 会员购买、验证、恢复及本地权益缓存 | `lovelistenbooks/Membership/MembershipStore.swift`、`MembershipTier.swift`、`MembershipTransactionRecord.swift`、`lovelistenbooks/Manager/MemberManager.swift` |
 | 月度、年度及永久选项存在于代码；上架状态、真实价格以商店为准 | `lovelistenbooks/Membership/MembershipTier.swift` |
+| 自动续期产品为初级/高级的月度与年度；永久为一次性购买，不自动取消已有订阅 | `MembershipTier.swift`、`MembershipView.swift` 的订阅与永久说明 |
+| 书架、同步、阅读器背景、自定义字体、AI、多语音、定时停止、多端书架及听书额度 | `MembershipAccess.swift`、`ReadingTimeManager.swift`、购买页权益对比 |
 | 生命周期购买权益刷新 | `lovelistenbooks/Manager/MembershipLifecycleManager.swift` |
 | 自动远程配置读取 GitLab/GitHub；当前配置请求不附书籍正文或录音 | `lovelistenbooks/Manager/RemoteCheckConfiguration.swift`、`RemoteCheckManager.swift` |
 | 官网 localStorage 仅用于手动语言偏好；未加入外部广告、分析或字体脚本 | `官网/app.js`、`language.js`、`legal.js` 与 HTML 引入资源 |
@@ -48,8 +50,19 @@
 ## 内容维护
 
 1. 更新 `scripts/legal-content.cjs`，同时调整中英文对应段落；公开链接与邮箱在 `site.config.js` 修改。
-2. 执行 `node scripts/build-html.cjs` 和 `node scripts/build-legal.cjs`，生成首页静态链接和两份双语页面。
+2. 执行 `node scripts/build-html.cjs` 和 `node scripts/build-legal.cjs`，生成首页静态链接和四份双语页面。
 3. 运行 `node --test tests/site.test.cjs tests/legal.test.cjs`，以及两个生成器的 `--check`。
 4. 预览中英文、章节锚点、手机阅读、联系邮箱与从首页进入/返回的流程，再发布。
 
-两份法律页都保留了完整中英文静态正文：有 JavaScript 时只显示选中的语言；无 JavaScript 时同时显示两种语言。网站的语言控制不会改变 iOS 的系统语言或桌面 App 名称。
+四份法律页都保留了完整中英文静态正文：有 JavaScript 时只显示选中的语言；无 JavaScript 时同时显示两种语言。网站的语言控制不会改变 iOS 的系统语言或桌面 App 名称。
+
+
+## 2026-10-12 会员与自动续费页面
+
+新增 `membership-agreement.html` 与 `auto-renewal-agreement.html`，供 App Store 的自定义 EULA、会员协议和自动续费协议链接使用。页面按当前源码书写，不采用参考文案中的黄金/钻石会员、6 个月方案或具体人民币价格。
+
+- 自动续期：`com.readio.basic`、`com.readio.basic1year`、`com.readio.pro`、`com.readio.pro1year`。
+- 一次性购买：`com.readio.basic.lifetime`、`com.readio.pro.lifetime`。购买永久不会自动关闭已有续订。
+- 免费/初级/高级额度以 `ReadingTimeManager.Limits` 和 `MembershipAccess` 为准，包括 5 本书、克隆声音 3/20/不限、本地克隆 1 小时/天与 4 小时/天、网络 TTS 8 小时/周、微软 TTS 4 小时/周、微软 Max 初级 4 小时/周、插件 TTS 2 小时/周与 8 小时/周。
+- 协议明确会员不包含第三方 API 余额，也不把 App 内可选的第三方登录描述成 Readio 自己的账户系统。
+- 正式价格、币种、试用和店面仍以 App Store 购买确认为准。发布前把实际 HTTPS 地址填入 App Store Connect，不要使用本地预览地址。

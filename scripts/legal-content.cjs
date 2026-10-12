@@ -8,13 +8,14 @@ const points = items => ({ type: 'points', items });
 const section = (id, enTitle, zhTitle, en, zh) => ({ id, en: { title: enTitle, blocks: en }, zh: { title: zhTitle, blocks: zh } });
 
 module.exports = {
-  updated: '2026-10-09',
+  updated: '2026-10-12',
   ui: {
     en: {
       brand: 'Readio', back: 'Back to home', skip: 'Skip to policy content',
       navLabel: 'Legal documents', toc: 'On this page', tocLabel: 'Document sections',
-      updated: 'Last updated', date: 'October 9, 2026', scope: 'App & website',
+      updated: 'Last updated', date: 'October 12, 2026', scope: 'App & website',
       privacy: 'Privacy policy', terms: 'Terms of use',
+      membership: 'Membership agreement', autoRenewal: 'Auto-renewal agreement',
       contactHeading: 'A question about your data or these terms?',
       contactBody: 'Write to us for privacy requests, product support, or questions about your rights.',
       emailNote: 'Please do not include passwords, API keys, payment details, or unneeded book and voice files.',
@@ -24,8 +25,9 @@ module.exports = {
     zh: {
       brand: '爱听书', back: '返回首页', skip: '跳转到政策正文',
       navLabel: '法律与政策', toc: '本页目录', tocLabel: '文档章节',
-      updated: '更新日期', date: '2026 年 10 月 9 日', scope: '适用于 App 与官网',
+      updated: '更新日期', date: '2026 年 10 月 12 日', scope: '适用于 App 与官网',
       privacy: '隐私政策', terms: '使用条款',
+      membership: '会员服务协议', autoRenewal: '自动续费协议',
       contactHeading: '关于隐私或条款，还有疑问？',
       contactBody: '隐私请求、产品支持或权利相关问题，都可以通过邮件与我们联系。',
       emailNote: '请勿发送密码、API 密钥、支付资料，或与问题无关的书籍和录音文件。',
@@ -184,10 +186,10 @@ module.exports = {
         ]),
         section('updates-contact', 'Policy updates and contact', '政策更新与联系', [
           p('We may revise this policy as features or legal requirements change and will update the date above. Material changes will be brought to your attention through an appropriate website or in-app notice; where a new processing activity requires consent, we will seek it as required.'),
-          p('For questions or privacy requests, contact {{contact}}. For the rules on content, voices, AI, and purchases, also read the {{terms}}.'),
+          p('For questions or privacy requests, contact {{contact}}. For the rules on content, voices, AI, and purchases, also read the {{terms}}, {{membership}}, and {{autoRenewal}}.'),
         ], [
           p('我们可能因功能或法律要求变化修订本政策，并更新页首日期。对于重大变化，会通过适当的官网或 App 内提示予以告知；新的处理活动依法需要同意时，将按要求取得同意。'),
-          p('政策疑问或隐私请求，请联系 {{contact}}。关于内容、声音、AI 及购买的使用规则，请同时阅读 {{terms}}。'),
+          p('政策疑问或隐私请求，请联系 {{contact}}。关于内容、声音、AI 及购买的使用规则，请同时阅读 {{terms}}、{{membership}} 与 {{autoRenewal}}。'),
         ]),
       ],
     },
@@ -274,14 +276,14 @@ module.exports = {
         ]),
         section('membership', 'Membership, renewal, and refunds', '会员、续订与退款', [
           points([
-            ['Your purchase', 'The App may offer Basic/Pro membership with monthly, yearly, or lifetime options. Available products, prices, currency, taxes, benefits, and any trial are those shown in the App Store purchase confirmation. A lifetime option, when offered, is a non-recurring purchase of the stated benefits, not unlimited third-party services, API credit, or rights to all future separately sold products.'],
+            ['Your purchase', 'The App may offer Basic and Pro membership, each with monthly, yearly, or lifetime options. Available products, prices, currency, taxes, benefits, and any trial are those shown in the App Store purchase confirmation. A lifetime option, when offered, is a one-time purchase of the stated benefits, not unlimited third-party services, API credit, or rights to all future separately sold products. Membership rules are explained in the {{membership}} and {{autoRenewal}}.'],
             ['Automatic renewal', 'If you purchase an auto-renewing subscription, it renews under Apple’s displayed terms until canceled. To avoid the next renewal, cancel at least 24 hours before the current period ends, subject to Apple’s confirmation and applicable rules. Manage it in iOS Settings → your Apple Account → Subscriptions, or {{subscriptions}}. Deleting the App does not cancel it.'],
             ['Restore and access', 'Use Restore Purchases with the purchasing Apple Account where the product supports it. Apple’s verified transactions, expiration, revocation, and refund status determine access. Canceling renewal normally preserves access for the remaining paid period, unless a refund, revocation, or another applicable rule changes it.'],
             ['Refunds and separate fees', 'For App Store refunds or billing issues, use {{refund}}; eligibility follows Apple’s process and applicable law. Contact us for App entitlement problems. External AI, TTS, or cloud charges must be addressed with the corresponding provider. Nothing here removes a mandatory refund or other consumer right.'],
           ]),
         ], [
           points([
-            ['购买内容', 'App 可能提供基础/专业会员及月度、年度、永久等选项。实际上架产品、价格、币种、税费、权益和试用，以 App Store 购买确认界面为准。若提供永久选项，它是对所列权益的非续订式购买，不代表无限额第三方服务、API 余额或所有未来单独销售产品的权利。'],
+            ['购买内容', 'App 可能提供初级会员和高级会员，各自包含月度、年度或永久选项。实际上架产品、价格、币种、税费、权益和试用，以 App Store 购买确认界面为准。若提供永久选项，它是对所列权益的一次性购买，不代表无限额第三方服务、API 余额或所有未来单独销售产品的权利。会员规则详见 {{membership}} 与 {{autoRenewal}}。'],
             ['自动续订', '购买自动续期订阅后，将按 Apple 展示的规则续订，直至取消。如不希望继续续订，请至少在当前周期结束前 24 小时取消，具体以 Apple 的确认和适用规则为准。可在 iOS“设置 → Apple 账户 → 订阅”或 {{subscriptions}} 中管理。删除 App 不会取消订阅。'],
             ['恢复与权益', '产品支持恢复时，可使用购买时的 Apple 账户执行“恢复购买”。访问权限以 Apple 验证的交易、到期、撤销及退款状态为依据。取消续订通常不影响剩余已付周期内的权益，但退款、撤销或其他适用规则另有处理的除外。'],
             ['退款与独立费用', 'App Store 退款或扣费问题请通过 {{refund}} 处理，资格依 Apple 流程及适用法律决定。App 内权益异常可联系我们。外部 AI、TTS 或云服务费用需向对应服务商处理。本条款不排除依法必须保障的退款或其他消费者权利。'],
@@ -324,11 +326,293 @@ module.exports = {
         section('general-contact', 'Guardians, language, and contact', '监护、语言与联系', [
           p('If you are a minor, review these terms with your parent or guardian and obtain any consent required for purchases, recordings, personal information, and external services. Do not assume that access to the App makes every connected service suitable for your age.'),
           p('The English and Chinese versions are intended to describe the same rules. If wording is unclear or differs, contact us for clarification; mandatory legal rights are not reduced by a translation. If a provision is unenforceable, the remaining provisions continue to the extent allowed by law.'),
-          p('Questions about these terms or the App: {{contact}}. Related document: {{privacy}}.'),
+          p('Questions about these terms or the App: {{contact}}. Related documents: {{privacy}}, {{membership}}, and {{autoRenewal}}.'),
         ], [
           p('未成年人应与父母或其他监护人共同阅读本条款，并对购买、录音、个人信息及外部服务取得所需同意。能够使用 App 不代表每个连接的服务都适合你的年龄。'),
           p('中英文版本旨在表达相同规则。如表述不清或出现差异，请联系我们说明；翻译不会减损强制性法律权利。某项条款不可执行时，其余条款在法律允许的范围内继续适用。'),
-          p('关于本条款或 App 的问题，请联系 {{contact}}。相关文档：{{privacy}}。'),
+          p('关于本条款或 App 的问题，请联系 {{contact}}。相关文档：{{privacy}}、{{membership}}、{{autoRenewal}}。'),
+        ]),
+      ],
+    },
+    membership: {
+      file: 'membership-agreement.html',
+      en: {
+        title: 'Membership agreement', eyebrow: 'WHAT A MEMBERSHIP INCLUDES.',
+        description: 'Basic and Pro plans, current benefits, and what a purchase does not include.',
+        intro: 'This agreement explains 爱听书 / Readio membership. It supplements the {{terms}} and does not replace Apple’s purchase terms, the {{privacy}}, or the {{autoRenewal}}.',
+        summary: [
+          { icon: 'receipt', title: 'Two membership levels', body: 'Basic and Pro may each offer monthly, yearly, and lifetime options.' },
+          { icon: 'voice', title: 'Benefits have limits', body: 'Listening allowances, voice clones, sync, and AI follow the current tier.' },
+          { icon: 'settings', title: 'Prices stay with Apple', body: 'The purchase confirmation shows the price, period, and any trial.' },
+        ],
+      },
+      zh: {
+        title: '会员服务协议', eyebrow: '会员包含什么',
+        description: '初级与高级会员方案、当前权益，以及购买并不包含的内容。',
+        intro: '本协议说明爱听书 / Readio 的会员服务。它是对 {{terms}} 的补充，不替代 Apple 的购买条款、{{privacy}} 或 {{autoRenewal}}。',
+        summary: [
+          { icon: 'receipt', title: '两个会员等级', body: '初级和高级会员各自可能提供月度、年度和永久选项。' },
+          { icon: 'voice', title: '权益有明确范围', body: '听书额度、克隆声音、同步和 AI 按当前等级提供。' },
+          { icon: 'settings', title: '价格以 Apple 为准', body: '价格、周期和试用信息以购买确认界面为准。' },
+        ],
+      },
+      sections: [
+        section('agreement', 'About this membership agreement', '关于本会员协议', [
+          p('This membership agreement applies when you buy, restore, or use a 爱听书 / Readio membership. “We” means the App’s developer and maintainer, reachable at {{contact}}. If you do not agree, do not purchase a membership.'),
+          p('General rules for content, voices, AI, and the service are in the {{terms}}. Personal-information processing is in the {{privacy}}. Auto-renewing monthly and yearly plans are also covered by the {{autoRenewal}}. Apple’s terms apply to billing, renewal, cancellation, and refunds processed by Apple.'),
+          p('The English and Chinese versions are intended to state the same rules. A translation does not reduce a mandatory consumer, privacy, or refund right.'),
+        ], [
+          p('购买、恢复或使用爱听书 / Readio 会员时，适用本会员服务协议。“我们”指 App 的开发与维护方，联系邮箱为 {{contact}}。如不同意，请勿购买会员。'),
+          p('内容、声音、AI 与服务的一般规则见 {{terms}}。个人信息处理见 {{privacy}}。月度与年度自动续期方案同时适用 {{autoRenewal}}。由 Apple 处理的扣费、续订、取消和退款，适用 Apple 的条款。'),
+          p('中英文版本旨在表达相同规则。翻译不会减损强制性的消费者、隐私或退款权利。'),
+        ]),
+        section('plans', 'Membership plans', '会员方案', [
+          p('The App currently defines two paid levels: Basic Member (初级会员) and Pro Member (高级会员). Each level may be offered as a monthly plan, a yearly plan, or a lifetime purchase. A plan appears for purchase only when Apple returns it and the purchase screen can display it.'),
+          points([
+            ['Basic monthly', 'Auto-renewable subscription. Product ID: com.readio.basic. Period: one month, until canceled.'],
+            ['Basic yearly', 'Auto-renewable subscription. Product ID: com.readio.basic1year. Period: one year, until canceled.'],
+            ['Basic lifetime', 'One-time, non-renewing purchase. Product ID: com.readio.basic.lifetime. It does not renew.'],
+            ['Pro monthly', 'Auto-renewable subscription. Product ID: com.readio.pro. Period: one month, until canceled.'],
+            ['Pro yearly', 'Auto-renewable subscription. Product ID: com.readio.pro1year. Period: one year, until canceled.'],
+            ['Pro lifetime', 'One-time, non-renewing purchase. Product ID: com.readio.pro.lifetime. It does not renew.'],
+          ]),
+          p('We do not state a fixed price in this agreement. The price, currency, tax, introductory offer, and billing period are those shown by the App Store before you confirm the purchase. If a product is unavailable, choose another displayed plan or try again later.'),
+        ], [
+          p('App 当前定义两个付费等级：初级会员（Basic Member）和高级会员（Pro Member）。每个等级可能提供月度方案、年度方案或永久购买。只有 Apple 返回商品且购买页能够展示时，该方案才可供购买。'),
+          points([
+            ['初级会员 · 月度', '自动续期订阅。产品 ID：com.readio.basic。周期：1 个月，直至取消。'],
+            ['初级会员 · 年度', '自动续期订阅。产品 ID：com.readio.basic1year。周期：1 年，直至取消。'],
+            ['初级会员 · 永久', '一次性、不续订的购买。产品 ID：com.readio.basic.lifetime。不会自动续费。'],
+            ['高级会员 · 月度', '自动续期订阅。产品 ID：com.readio.pro。周期：1 个月，直至取消。'],
+            ['高级会员 · 年度', '自动续期订阅。产品 ID：com.readio.pro1year。周期：1 年，直至取消。'],
+            ['高级会员 · 永久', '一次性、不续订的购买。产品 ID：com.readio.pro.lifetime。不会自动续费。'],
+          ]),
+          p('本协议不写死价格。价格、币种、税费、优惠和计费周期，以你确认购买前 App Store 展示的内容为准。若某个商品暂不可用，可选择其他已展示的方案或稍后重试。'),
+        ]),
+        section('benefits', 'What each level includes', '各等级包含的权益', [
+          p('Benefits below describe the current in-app rules. They can change with an App update. A paid change that materially affects an existing purchase is handled under the purchase terms and applicable law, not by silently treating the old purchase as canceled.'),
+          points([
+            ['Bookshelf', 'Without membership, importing is limited to 5 books. Basic and Pro remove that bookshelf limit.'],
+            ['Sync and reading', 'Basic and Pro can use sync, reader backgrounds, and custom fonts. Free use does not include those features.'],
+            ['AI and multi-voice', 'Reading AI and multi-voice listening require Basic or Pro. Membership does not include a third-party model, tool, or API balance.'],
+            ['Voice clones', 'You can save 3 cloned voices without membership, 20 with Basic, and an unlimited number with Pro, subject to device storage and the rights you have in each recording.'],
+            ['Local clone listening', 'Local cloned-voice listening is limited to 1 hour per day without membership and 4 hours per day with Basic. Pro listening for this source is not limited by that daily allowance.'],
+            ['Network listening', 'Network TTS is limited to 8 hours per week without membership. Basic and Pro are not limited by that weekly allowance.'],
+            ['Microsoft TTS', 'Microsoft TTS is limited to 4 hours per week without membership. Basic and Pro are not limited by that weekly allowance. Microsoft Max TTS is unavailable without membership, limited to 4 hours per week with Basic, and not limited by that weekly allowance with Pro.'],
+            ['Plugin TTS', 'Plugin TTS is limited to 2 hours per week without membership and 8 hours per week with Basic. Pro is not limited by that weekly allowance.'],
+            ['Pro-only features', 'Sleep timer and multi-device bookshelf require Pro. Pro includes the Basic benefits unless a more specific Pro rule above says otherwise.'],
+          ]),
+          p('“Not limited by that allowance” means the App does not apply the stated membership quota. It does not promise unlimited device storage, uninterrupted providers, or that an external service will accept unlimited use. Listening time follows the App’s usage record for rendered playback.'),
+        ], [
+          p('以下权益描述的是当前 App 内规则，可能随版本更新调整。对已有购买有实质影响的付费变更，按购买约定和适用法律处理，不会把原购买默示为已取消。'),
+          points([
+            ['书架', '未开通会员时，导入上限为 5 本书。初级和高级会员不再受该书架数量限制。'],
+            ['同步与阅读', '初级和高级会员可使用同步、阅读器背景和自定义字体。未开通会员不包含这些功能。'],
+            ['AI 与多语音', '阅读 AI 和多语音听书需要初级或高级会员。会员不包含第三方模型、工具或 API 余额。'],
+            ['克隆声音', '未开通会员可保存 3 个克隆声音，初级会员 20 个，高级会员数量不限；仍受设备存储空间和你对每段录音所拥有权利的限制。'],
+            ['本地克隆听书', '本地克隆听书未开通会员为每天 1 小时，初级会员为每天 4 小时。高级会员不受该每日额度限制。'],
+            ['网络听书', '网络 TTS 未开通会员为每周 8 小时。初级和高级会员不受该每周额度限制。'],
+            ['微软 TTS', '微软 TTS 未开通会员为每周 4 小时。初级和高级会员不受该每周额度限制。微软 Max TTS 未开通会员不可用，初级会员每周 4 小时，高级会员不受该每周额度限制。'],
+            ['插件 TTS', '插件 TTS 未开通会员为每周 2 小时，初级会员为每周 8 小时。高级会员不受该每周额度限制。'],
+            ['高级会员专属', '定时停止和多端书架需要高级会员。除上面已单独说明的高级规则外，高级会员包含初级会员权益。'],
+          ]),
+          p('“不受该额度限制”指 App 不再套用上述会员配额，不代表设备存储无限、服务永不中断，也不代表外部服务接受无限制使用。听书时长按 App 对实际播放的用量记录计算。'),
+        ]),
+        section('not-included', 'What membership does not include', '会员不包含的内容', [
+          list([
+            'A catalog of books, a license to copyrighted material you do not already have rights to use, or permission to bypass another service’s access controls.',
+            'Prepaid credit for a third-party AI, TTS, cloud, plugin, or API provider. Those providers may bill you separately under their own terms.',
+            'Guaranteed offline availability. Some listening and AI features need downloaded resources, a configured provider, or a network connection.',
+            'A promise that generated speech, transcription, summaries, or answers are accurate, complete, or suitable for every file.',
+            'Automatic cancellation of another Apple subscription. Buying lifetime access does not by itself turn off an existing monthly or yearly renewal.',
+          ]),
+        ], [
+          list([
+            '不包含书籍内容库，不授予你原本无权使用的著作权材料，也不允许绕过其他服务的访问控制。',
+            '不包含第三方 AI、TTS、云服务、插件或 API 的预付余额。这些服务商可能按各自条款另行收费。',
+            '不保证全部功能离线可用。部分听书和 AI 功能需要已下载的资源、已配置的服务商或网络连接。',
+            '不承诺合成语音、转写、摘要或回答准确、完整，或适用于所有文件。',
+            '不会自动取消另一项 Apple 订阅。购买永久权益本身不会关闭已有的月度或年度续订。',
+          ]),
+        ]),
+        section('access', 'When access starts, ends, or changes', '权益何时生效、结束或变更', [
+          p('Access follows Apple’s verified transaction. A subscription remains available through the paid period Apple reports, unless Apple refunds, revokes, or otherwise changes it. A lifetime purchase remains available while Apple reports that non-consumable purchase as valid.'),
+          p('If you already have an auto-renewing subscription and buy a lifetime plan, the lifetime purchase does not automatically cancel that subscription. Turn renewal off in Manage Subscriptions if you want to avoid another charge. If you change from one subscription plan to another, the effective time is the time shown on the App Store confirmation.'),
+          p('Canceling renewal does not normally remove access before the end of the period you already paid for. Deleting the App, signing out of a third-party service, or stopping use does not by itself cancel an Apple subscription or refund a lifetime purchase.'),
+          p('Where the product supports it, use Restore Purchases with the same Apple Account that made the purchase. We cannot restore a purchase that Apple does not verify, and we do not operate a separate account login for membership.'),
+        ], [
+          p('权益以 Apple 验证的交易为准。订阅在 Apple 报告的已付周期内可用，除非 Apple 退款、撤销或另行变更。永久购买在 Apple 仍将该非消耗型购买报告为有效时继续可用。'),
+          p('如果已有自动续期订阅又购买永久方案，永久购买不会自动取消该订阅。若不希望再次扣费，请在“管理订阅”中关闭续订。从一个订阅方案更换到另一个时，生效时间以 App Store 确认页显示的时间为准。'),
+          p('取消续订通常不会提前移除当前已付周期内的权益。删除 App、退出第三方服务或停止使用，本身不会取消 Apple 订阅，也不会退还永久购买的款项。'),
+          p('商品支持恢复时，请使用购买时的同一 Apple 账户执行“恢复购买”。Apple 未能验证的购买，我们无法恢复。会员不依赖单独的 App 账户登录。'),
+        ]),
+        section('payment', 'Payment, renewal, and refunds', '付款、续订与退款', [
+          p('Payment is charged to your Apple Account after you confirm the purchase. Monthly and yearly plans renew automatically under the {{autoRenewal}}. Lifetime plans are charged once and do not renew.'),
+          p('For an App Store billing issue or refund request, use {{refund}}. Apple decides eligibility under its process and applicable law. Contact {{contact}} if a verified purchase is not reflected in the App. This agreement does not remove a mandatory refund or other consumer right.'),
+          p('External provider charges are not Apple membership charges. Review the provider’s price and terms before sending a book, prompt, or voice request that can incur a fee.'),
+        ], [
+          p('你确认购买后，费用记入 Apple 账户。月度与年度方案按 {{autoRenewal}} 自动续订。永久方案只收取一次费用，不会续订。'),
+          p('App Store 扣费问题或退款请求请通过 {{refund}} 处理。是否符合退款条件，由 Apple 按其流程和适用法律决定。已验证的购买未在 App 中生效时，请联系 {{contact}}。本协议不排除依法必须保障的退款或其他消费者权利。'),
+          p('外部服务商收费不是 Apple 会员费用。发送可能产生费用的书籍、提示或语音请求前，请先查看该服务商的价格和条款。'),
+        ]),
+        section('changes', 'Changes to benefits', '权益变更', [
+          p('We may update membership features for product, security, compatibility, or legal reasons and will update this page’s date when the published agreement changes. Where practical, the App’s purchase or comparison screen will show the current benefit summary.'),
+          p('We will not treat a general feature update as your agreement to give up an already paid benefit. If a change materially reduces a paid benefit, existing purchasers’ rights are handled under the purchase terms and applicable law.'),
+          p('Quotas are measured by the App’s current usage rules. A displayed allowance is not a stored balance that can be transferred, sold, or redeemed for cash.'),
+        ], [
+          p('我们可能因产品、安全、兼容或法律原因更新会员功能；已发布协议发生变化时，会更新本页日期。在可行时，App 的购买页或权益对比会展示当前权益摘要。'),
+          p('一般功能更新不视为你同意放弃已经付费的权益。若变更实质减少已付费权益，已购买用户的权利按购买约定和适用法律处理。'),
+          p('额度按 App 当前的用量规则计算。页面展示的可用时长不是可以转让、出售或折现的储值余额。'),
+        ]),
+        section('conduct', 'Acceptable use of member features', '会员功能的合理使用', [
+          p('Membership is for your own use of the App. Do not share, resell, or automate access in a way that bypasses Apple’s purchase rules or another person’s rights. Voice cloning still requires the rights and consents described in the {{terms}}.'),
+          p('Do not upload content, recordings, prompts, or credentials you are not allowed to use. Provider credentials you enter remain subject to that provider’s account rules and may be billed by that provider.'),
+          p('We may limit an affected feature where reasonably necessary to address unlawful use, serious abuse, a security risk, or a legal requirement. Where practical and lawful, we will explain the reason and available remedy. This is not a right to withdraw paid access without a lawful basis.'),
+        ], [
+          p('会员供你本人使用 App。请勿分享、转售或以规避 Apple 购买规则或他人权利的方式自动获取访问权限。声音克隆仍须满足 {{terms}} 中的权利和同意要求。'),
+          p('请勿上传你无权使用的内容、录音、提示或凭证。你填写的服务商凭证仍受该服务商账户规则约束，并可能由该服务商收费。'),
+          p('为处理违法使用、严重滥用、安全风险或法律要求，我们可能在合理必要范围内限制相关功能。在可行且合法时，会说明原因和可用的解决方式。这不构成无合法依据撤回已付费访问的权利。'),
+        ]),
+        section('responsibility', 'Responsibility', '责任', [
+          p('Membership does not make speech, AI, sync, or third-party services error-free. Responsibility for loss is determined by applicable law and the circumstances, including each party’s own conduct.'),
+          p('Nothing in this agreement excludes liability that cannot legally be excluded, limits a mandatory warranty, or removes a statutory consumer right. There is no blanket waiver and no automatic obligation for you to indemnify us.'),
+        ], [
+          p('开通会员不会使语音、AI、同步或第三方服务变得没有错误。损失责任依据适用法律和具体情况确定，包括各方自身行为。'),
+          p('本协议不排除依法不得排除的责任，不限制强制性保障，也不剥夺法定消费者权利。不设置一概免责，也不要求你自动向我们承担赔偿义务。'),
+        ]),
+        section('contact', 'Contact and related documents', '联系与相关文档', [
+          p('Questions about membership benefits or a verified purchase that the App does not recognize: {{contact}}. Include the App version and a short description. Do not email passwords, API keys, full payment numbers, or unrelated book and voice files.'),
+          p('Related documents: {{terms}}, {{autoRenewal}}, and {{privacy}}. Manage an Apple subscription in {{subscriptions}}.'),
+        ], [
+          p('会员权益问题，或 App 未能识别已验证的购买，请联系 {{contact}}。请提供 App 版本和简要说明。请勿发送密码、API 密钥、完整支付号码，或与问题无关的书籍和录音文件。'),
+          p('相关文档：{{terms}}、{{autoRenewal}}、{{privacy}}。Apple 订阅可在 {{subscriptions}} 中管理。'),
+        ]),
+      ],
+    },
+    autoRenewal: {
+      file: 'auto-renewal-agreement.html',
+      en: {
+        title: 'Auto-renewal agreement', eyebrow: 'BEFORE A SUBSCRIPTION RENEWS.',
+        description: 'Which Readio plans renew, when Apple bills, and how to cancel.',
+        intro: 'This agreement applies only to auto-renewable Readio subscriptions. Lifetime purchases do not auto-renew. It supplements the {{membership}} and the {{terms}}.',
+        summary: [
+          { icon: 'receipt', title: 'Four renewing plans', body: 'Basic and Pro each have a monthly plan and a yearly plan.' },
+          { icon: 'settings', title: 'Cancel before renewal', body: 'Turn renewal off at least 24 hours before the period ends.' },
+          { icon: 'cloud', title: 'Apple handles billing', body: 'Charges, retries, and refunds follow the Apple Account purchase.' },
+        ],
+      },
+      zh: {
+        title: '自动续费协议', eyebrow: '订阅续订之前',
+        description: '哪些 Readio 方案会续订、Apple 何时扣费，以及如何取消。',
+        intro: '本协议只适用于会自动续期的 Readio 订阅。永久购买不会自动续费。它是对 {{membership}} 和 {{terms}} 的补充。',
+        summary: [
+          { icon: 'receipt', title: '四项续订方案', body: '初级和高级会员各自有月度方案和年度方案。' },
+          { icon: 'settings', title: '到期前取消', body: '请至少在当前周期结束前 24 小时关闭续订。' },
+          { icon: 'cloud', title: '由 Apple 扣费', body: '扣费、重试和退款遵循该 Apple 账户中的购买。' },
+        ],
+      },
+      sections: [
+        section('scope', 'Which purchases auto-renew', '哪些购买会自动续费', [
+          p('The following plans are auto-renewable subscriptions when they are offered in the App Store:'),
+          points([
+            ['Basic Member — monthly', 'Service: 初级会员一个月. Product ID: com.readio.basic. Period: 1 month. It renews for another month unless canceled.'],
+            ['Basic Member — yearly', 'Service: 初级会员一年. Product ID: com.readio.basic1year. Period: 1 year. It renews for another year unless canceled.'],
+            ['Pro Member — monthly', 'Service: 高级会员一个月. Product ID: com.readio.pro. Period: 1 month. It renews for another month unless canceled.'],
+            ['Pro Member — yearly', 'Service: 高级会员一年. Product ID: com.readio.pro1year. Period: 1 year. It renews for another year unless canceled.'],
+          ]),
+          p('Basic lifetime (com.readio.basic.lifetime) and Pro lifetime (com.readio.pro.lifetime) are one-time purchases. They are not auto-renewable subscriptions and this renewal agreement does not make them renew.'),
+          p('The price is the price displayed by the App Store for your storefront before you confirm payment. This agreement does not publish a substitute price. Taxes, currency, and any introductory offer are also shown by Apple.'),
+        ], [
+          p('以下方案在 App Store 提供时属于自动续期订阅：'),
+          points([
+            ['初级会员 · 月度', '订阅服务：初级会员一个月。产品 ID：com.readio.basic。周期：1 个月。除非取消，否则按另一个月续订。'],
+            ['初级会员 · 年度', '订阅服务：初级会员一年。产品 ID：com.readio.basic1year。周期：1 年。除非取消，否则按另一年续订。'],
+            ['高级会员 · 月度', '订阅服务：高级会员一个月。产品 ID：com.readio.pro。周期：1 个月。除非取消，否则按另一个月续订。'],
+            ['高级会员 · 年度', '订阅服务：高级会员一年。产品 ID：com.readio.pro1year。周期：1 年。除非取消，否则按另一年续订。'],
+          ]),
+          p('初级永久（com.readio.basic.lifetime）和高级永久（com.readio.pro.lifetime）是一次性购买。它们不是自动续期订阅，本续费协议不会使它们续订。'),
+          p('价格是你确认付款前 App Store 在当前店面展示的价格。本协议不另行公布替代价格。税费、币种和任何优惠也由 Apple 展示。'),
+        ]),
+        section('billing', 'How renewal billing works', '续费如何扣款', [
+          p('After you confirm an auto-renewable plan, the payment is charged to your Apple Account, which Apple may show as an iTunes or App Store account. The subscription then renews for the same plan length unless you cancel renewal.'),
+          p('Apple charges the Apple Account within 24 hours before the current period ends. If that charge succeeds, the subscription continues for one more period of the same length. If Apple changes the displayed renewal price, Apple’s confirmation and applicable rules control when the new price applies.'),
+          p('A failed or reversed charge can interrupt renewal. Access after a billing retry, grace period, refund, or revocation follows the status Apple reports. We do not independently collect the subscription payment.'),
+        ], [
+          p('你确认自动续期方案后，费用记入 Apple 账户；Apple 也可能将其显示为 iTunes 或 App Store 账户。除非你取消续订，订阅会按相同方案时长续订。'),
+          p('Apple 会在当前周期结束前 24 小时内向 Apple 账户扣费。扣费成功后，订阅顺延一个相同长度的周期。若 Apple 变更所展示的续订价格，新价格何时生效以 Apple 的确认和适用规则为准。'),
+          p('扣费失败或被撤销可能中断续订。账单重试、宽限期、退款或撤销之后的访问权限，以 Apple 报告的状态为准。我们不另行收取订阅款项。'),
+        ]),
+        section('cancel', 'How to cancel renewal', '如何取消续订', [
+          p('You can cancel at any time, effective at the end of the current paid period. To avoid the next charge, cancel at least 24 hours before the current period ends. Cancellation is confirmed by Apple, not by deleting the App.'),
+          list([
+            'On iPhone or iPad, open Settings.',
+            'Tap your name, or open your Apple Account. Older system versions may show this under iTunes & App Store or App Store.',
+            'Tap Subscriptions. You can also open {{subscriptions}}.',
+            'Select the Readio plan and turn off auto-renewal, or follow the cancel control Apple displays.',
+          ]),
+          p('After renewal is turned off, you normally keep the membership benefits through the end of the period already paid, unless Apple refunds or revokes the transaction. Canceling does not delete local books, voice samples, or cloud copies. Remove those separately if you want them removed.'),
+          p('Uninstalling Readio, turning off a network connection, or revoking a third-party provider does not cancel the Apple subscription.'),
+        ], [
+          p('你可以随时取消，取消后在当前已付周期结束时生效。为避免下一次扣费，请至少在当前周期结束前 24 小时取消。取消是否成功由 Apple 确认，删除 App 不会完成取消。'),
+          list([
+            '在 iPhone 或 iPad 上打开“设置”。',
+            '点按你的姓名，或打开 Apple 账户。较旧的系统版本可能在“iTunes 与 App Store”或 App Store 中显示。',
+            '点按“订阅”。也可以打开 {{subscriptions}}。',
+            '选择 Readio 的方案并关闭自动续订，或按 Apple 展示的取消操作完成。',
+          ]),
+          p('关闭续订后，通常可继续使用会员权益至已付周期结束，除非 Apple 退款或撤销该交易。取消不会删除本地书籍、声音样本或云端副本。如果希望删除，需要另行处理。'),
+          p('卸载爱听书、关闭网络或撤销第三方服务商授权，都不会取消 Apple 订阅。'),
+        ]),
+        section('changes', 'Changing or restoring a plan', '更换或恢复方案', [
+          p('If you switch between monthly and yearly, or between Basic and Pro, the plan change takes effect at the time shown on the App Store confirmation. Do not rely on this page to predict a different effective date.'),
+          p('Buying a lifetime plan does not automatically cancel an active monthly or yearly subscription. To avoid another subscription charge, cancel renewal separately in Manage Subscriptions.'),
+          p('Use Restore Purchases in the App with the same Apple Account when a subscription should be active but is not shown. Restoration depends on Apple verifying the transaction. Readio does not provide a separate username and password for this purchase.'),
+        ], [
+          p('在月度与年度之间更换，或在初级与高级之间更换时，方案变更于 App Store 确认页显示的时间生效。请勿以本页推测不同的生效日期。'),
+          p('购买永久方案不会自动取消仍在生效的月度或年度订阅。为避免订阅再次扣费，请另外在“管理订阅”中取消续订。'),
+          p('订阅应当有效但 App 未显示时，请使用同一 Apple 账户在 App 内执行“恢复购买”。能否恢复取决于 Apple 是否验证该交易。Readio 不为这项购买提供单独的用户名和密码。'),
+        ]),
+        section('benefits', 'What the renewing plan provides', '续订方案提供什么', [
+          p('During a paid period, a Basic subscription provides the current Basic benefits, and a Pro subscription provides the current Pro benefits, as described in the {{membership}}. Renewal extends the same level for another period. It does not by itself upgrade Basic to Pro.'),
+          p('Quotas reset under the App’s current daily or weekly rules. Unused time in one period is not carried forward as a balance. Renewal does not include third-party API credit or guarantee that an external provider remains available.'),
+        ], [
+          p('在已付周期内，初级订阅提供当前的初级权益，高级订阅提供当前的高级权益，具体见 {{membership}}。续订会把同一等级再延长一个周期，本身不会把初级升级为高级。'),
+          p('额度按 App 当前的每日或每周规则重置。某一周期未用完的时长不会结转为余额。续订不包含第三方 API 余额，也不保证外部服务商持续可用。'),
+        ]),
+        section('refunds', 'Refunds and billing disputes', '退款与扣费争议', [
+          p('Request an App Store refund or report a billing problem through {{refund}}. Apple determines whether a charge is eligible for a refund. Contact {{contact}} if you need help identifying which Readio plan is active after Apple has verified or changed the transaction.'),
+          p('A refund or revocation can end access before the original period ends. This agreement does not exclude a refund or consumer remedy that applicable law requires Apple or we must provide.'),
+        ], [
+          p('App Store 退款或扣费问题请通过 {{refund}} 提交。某笔费用是否可以退款，由 Apple 决定。Apple 已验证或变更交易后，如需协助确认当前生效的 Readio 方案，请联系 {{contact}}。'),
+          p('退款或撤销可能使权益在原周期结束前终止。本协议不排除适用法律要求 Apple 或我们必须提供的退款或其他消费者救济。'),
+        ]),
+        section('price-changes', 'Price and agreement changes', '价格与协议变更', [
+          p('Apple displays the renewal price that applies to your subscription. If that price changes, follow the notice and confirmation flow Apple provides. We do not charge a different renewal amount outside that flow.'),
+          p('We may update this agreement and will change its published date when we do. Material changes receive an appropriate notice. Continuing a future renewal after the required notice does not waive a mandatory right that applies to an amount you have already paid.'),
+        ], [
+          p('Apple 会展示适用于你的订阅的续订价格。价格变化时，按 Apple 提供的通知和确认流程处理。我们不会在该流程之外另收不同的续订金额。'),
+          p('我们可能更新本协议，并在更新后修改发布日期。重大变化会给予适当提示。在必要提示之后继续未来的续订，不代表放弃对已支付金额所适用的强制性权利。'),
+        ]),
+        section('ending', 'End of renewal', '续订结束', [
+          p('Renewal ends when you cancel, when Apple stops billing or revokes the transaction, or when the plan is no longer available under Apple’s rules. After it ends, the App returns the affected benefits to the access level Apple’s remaining purchases support, which may be free limits or another active plan.'),
+          p('Ending renewal does not delete your library. Back up anything you still need and manage cloud copies separately. Existing obligations to a third-party provider remain with that provider.'),
+        ], [
+          p('当你取消、Apple 停止扣费或撤销交易，或该方案按 Apple 的规则不再提供时，续订结束。结束后，受影响的权益回到 Apple 其余购买仍支持的访问等级，可能是免费限制，也可能是另一项仍有效的方案。'),
+          p('结束续订不会删除书库。请另行备份仍需要的内容，并单独管理云端副本。对第三方服务商已产生的义务仍由该服务商关系处理。'),
+        ]),
+        section('responsibility', 'Responsibility', '责任', [
+          p('Apple controls the payment account, renewal timing, and subscription-management interface. We are responsible for describing the App benefits and for problems in the App that we can reasonably correct. Neither description guarantees uninterrupted service.'),
+          p('Nothing here excludes liability that cannot legally be excluded or removes a statutory consumer right. There is no automatic indemnity obligation.'),
+        ], [
+          p('Apple 控制付款账户、续订时间和订阅管理界面。我们负责说明 App 权益，并处理我们能够合理纠正的 App 内问题。这些说明都不保证服务永不中断。'),
+          p('本协议不排除依法不得排除的责任，也不剥夺法定消费者权利。不设置自动赔偿义务。'),
+        ]),
+        section('contact', 'Contact and related documents', '联系与相关文档', [
+          p('For a renewal question about Readio benefits, email {{contact}}. For the Apple Account charge itself, use Apple’s subscription and purchase support. Do not send payment card numbers or unrelated private files.'),
+          p('Related documents: {{membership}}, {{terms}}, and {{privacy}}.'),
+        ], [
+          p('关于 Readio 权益的续订问题，请发送邮件至 {{contact}}。Apple 账户扣费本身请使用 Apple 的订阅和购买支持。请勿发送支付卡号或无关私人文件。'),
+          p('相关文档：{{membership}}、{{terms}}、{{privacy}}。'),
         ]),
       ],
     },

@@ -34,7 +34,7 @@
       return typeof value === 'string' && /^[a-z0-9._+-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$/i.test(value)
         ? { href: `mailto:${value}`, external: false } : null;
     }
-    return ['privacyURL', 'termsURL'].includes(key) ? pageLink(value, language) : null;
+    return ['privacyURL', 'termsURL', 'membershipURL', 'autoRenewalURL'].includes(key) ? pageLink(value, language) : null;
   }
   function apply(document, config, language) {
     document.querySelectorAll('[data-config-link]').forEach(link => {

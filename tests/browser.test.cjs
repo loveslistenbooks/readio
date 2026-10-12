@@ -38,7 +38,7 @@ async function loaded(page) {
 async function newPage(options = {}, production = false) {
   const context = await browser.newContext(options);
   const page = await context.newPage();
-  if (!production) await context.route('**/site.config.js', route => route.fulfill({ contentType: 'text/javascript', body: 'window.SITE_CONFIG={appStoreURL:"",privacyURL:"",termsURL:"",supportEmail:""};' }));
+  if (!production) await context.route('**/site.config.js', route => route.fulfill({ contentType: 'text/javascript', body: 'window.SITE_CONFIG={appStoreURL:"",privacyURL:"",termsURL:"",membershipURL:"",autoRenewalURL:"",supportEmail:""};' }));
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   return { context, page };
@@ -217,10 +217,10 @@ async function newPage(options = {}, production = false) {
   report('All three detailed features, advanced disclosure, poster fallback and FAQ work without JavaScript');
 
   const configured = await newPage();
-  await configured.page.route('**/site.config.js', route => route.fulfill({ contentType: 'text/javascript', body: `window.SITE_CONFIG={appStoreURL:'https://apps.apple.com/app/id1234567890',privacyURL:'https://example.com/privacy',termsURL:'https://example.com/terms',supportEmail:'support@example.com'};` }));
+  await configured.page.route('**/site.config.js', route => route.fulfill({ contentType: 'text/javascript', body: `window.SITE_CONFIG={appStoreURL:'https://apps.apple.com/app/id1234567890',privacyURL:'https://example.com/privacy',termsURL:'https://example.com/terms',membershipURL:'https://example.com/membership',autoRenewalURL:'https://example.com/renewal',supportEmail:'support@example.com'};` }));
   await configured.page.goto(base); await loaded(configured.page);
   assert.equal(await configured.page.locator('[data-download]').first().getAttribute('href'), 'https://apps.apple.com/app/id1234567890');
-  assert.equal(await configured.page.locator('[data-config-link]:visible').count(), 3);
+  assert.equal(await configured.page.locator('[data-config-link]:visible').count(), 9);
   await configured.context.close();
   report('Configured App Store, privacy, terms and support links are wired correctly (no external navigation)');
 
@@ -243,7 +243,7 @@ async function newPage(options = {}, production = false) {
   }
   report('Supplied App Store ID reaches all three downloads in both languages and without JavaScript; click destination verified with interception');
 
-  for (const documentID of ['privacy', 'terms']) {
+  for (const documentID of ['privacy', 'terms', 'membership', 'autoRenewal']) {
     for (const lang of ['en', 'zh']) {
       for (const width of [320, 375, 390, 768, 1024, 1440]) {
         const item = await newPage({ locale: lang === 'zh' ? 'zh-CN' : 'en-US', viewport: { width, height: width < 721 ? 844 : 1000 } }, true);
@@ -319,7 +319,7 @@ async function newPage(options = {}, production = false) {
   await legalNoJS.page.goto(base);
   assert.equal(await legalNoJS.page.locator('.footer-links [data-config-link="privacyURL"]').getAttribute('href'), 'privacy.html');
   await legalNoJS.page.locator('.footer-links [data-config-link="privacyURL"]').click();
-  for (const documentID of ['privacy', 'terms']) {
+  for (const documentID of ['privacy', 'terms', 'membership', 'autoRenewal']) {
     await legalNoJS.page.goto(`${base}${documentID}.html`);
     assert.ok(await legalNoJS.page.locator('.legal-nojs').isVisible());
     for (const lang of ['en', 'zh']) assert.equal(await legalNoJS.page.locator(`.legal-copy[data-legal-lang="${lang}"]:visible`).count(), legal.pages[documentID].sections.length);
@@ -332,7 +332,7 @@ async function newPage(options = {}, production = false) {
   report('Without JavaScript, homepage links work and both complete legal translations, contact and contents remain available');
 
   const unsafe = await newPage({}, true);
-  await unsafe.page.route('**/site.config.js', route => route.fulfill({ contentType: 'text/javascript', body: `window.SITE_CONFIG=${JSON.stringify({ appStoreURL: '', privacyURL: 'javascript:alert(1)', termsURL: '//evil.example/terms.html', supportEmail: 'bad@example.com?bcc=evil@example.com' })};` }));
+  await unsafe.page.route('**/site.config.js', route => route.fulfill({ contentType: 'text/javascript', body: `window.SITE_CONFIG=${JSON.stringify({ appStoreURL: '', privacyURL: 'javascript:alert(1)', termsURL: '//evil.example/terms.html', membershipURL: 'javascript:alert(1)', autoRenewalURL: '//evil.example/renewal.html', supportEmail: 'bad@example.com?bcc=evil@example.com' })};` }));
   for (const file of ['index.html', 'privacy.html']) {
     await unsafe.page.goto(base + file); await loaded(unsafe.page);
     assert.equal(await unsafe.page.locator('[data-config-link]:visible').count(), 0);

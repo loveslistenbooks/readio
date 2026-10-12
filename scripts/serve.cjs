@@ -3,7 +3,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const publicFiles = new Set(['index.html', 'privacy.html', 'terms.html', 'styles.css', 'legal.css', 'app.js', 'legal.js', 'content.js', 'language.js', 'links.js', 'site.config.js', '.nojekyll']);
+const publicFiles = new Set(['index.html', 'privacy.html', 'terms.html', 'membership-agreement.html', 'auto-renewal-agreement.html', 'styles.css', 'legal.css', 'app.js', 'legal.js', 'content.js', 'language.js', 'links.js', 'site.config.js', '.nojekyll']);
 const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.webp': 'image/webp', '.png': 'image/png' };
 const port = Number(process.env.PORT || 8765);
 const server = http.createServer((req, res) => {

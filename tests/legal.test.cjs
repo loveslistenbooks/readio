@@ -15,6 +15,8 @@ test('real contact email and local legal pages are configured, without a fake st
   assert.equal(config.supportEmail, 'listenbook999@outlook.com');
   assert.equal(config.privacyURL, 'privacy.html');
   assert.equal(config.termsURL, 'terms.html');
+  assert.equal(config.membershipURL, 'membership-agreement.html');
+  assert.equal(config.autoRenewalURL, 'auto-renewal-agreement.html');
   assert.ok(config.appStoreURL === '' || /^https:\/\/apps\.apple\.com\/.+id\d+/.test(config.appStoreURL));
   assert.equal(links.resolve('supportEmail', config).href, 'mailto:listenbook999@outlook.com');
 });
@@ -59,7 +61,7 @@ test('both documents have aligned bilingual structures, concrete content, and st
     assert.ok(!/阅读阅多|漫画大师|友盟SDK|优量汇SDK|穿山甲广告SDK|快手联盟SDK|yueduyueyou999/.test(serialized));
     assert.ok(!/TODO|APP_ID_HERE|COMPANY_NAME/.test(serialized));
     for (const [, token] of serialized.matchAll(/\{\{(\w+)\}\}/g)) {
-      assert.ok(['privacy', 'terms', 'contact'].includes(token) || legal.links[token], `Missing token ${token}`);
+      assert.ok(['privacy', 'terms', 'membership', 'autoRenewal', 'contact'].includes(token) || legal.links[token], `Missing token ${token}`);
     }
   }
 });
@@ -102,7 +104,7 @@ for (const page of Object.values(legal.pages)) {
 }
 test('homepage fallback exposes legal and email links even without JavaScript', () => {
   const html = read('index.html');
-  for (const key of ['privacyURL', 'termsURL', 'supportEmail']) {
+  for (const key of ['privacyURL', 'termsURL', 'membershipURL', 'autoRenewalURL', 'supportEmail']) {
     const tag = new RegExp(`<a\\b[^>]*data-config-link="${key}"[^>]*>`).exec(html)?.[0];
     assert.ok(tag && !/\bhidden\b/.test(tag), key);
     assert.ok(tag.includes(`href="${links.resolve(key, config).href}"`), key);
@@ -111,7 +113,7 @@ test('homepage fallback exposes legal and email links even without JavaScript', 
 test('deployment and local preview both serve all legal assets', () => {
   const workflow = read('.github/workflows/deploy-pages.yml');
   const preview = read('scripts/serve.cjs');
-  for (const file of ['privacy.html', 'terms.html', 'legal.css', 'legal.js', 'links.js']) {
+  for (const file of ['privacy.html', 'terms.html', 'membership-agreement.html', 'auto-renewal-agreement.html', 'legal.css', 'legal.js', 'links.js']) {
     assert.ok(workflow.includes(file), file);
     assert.ok(preview.includes(`'${file}'`), file);
   }
@@ -137,6 +139,17 @@ test('privacy explains actual online and deletion boundaries in both languages',
 test('terms cover subscription management, AI and voice limits, and mandatory consumer rights', () => {
   const text = JSON.stringify(legal.pages.terms);
   for (const term of ['24 hours', '24 小时', 'refund', '退款', 'deceptive impersonation', '误导性冒充', 'statutory consumer', '消费者', 'final bill', '最终账单']) assert.ok(text.includes(term), term);
+});
+test('membership and auto-renewal agreements match the real Readio products', () => {
+  const membership = JSON.stringify(legal.pages.membership);
+  const renewal = JSON.stringify(legal.pages.autoRenewal);
+  for (const term of ['com.readio.basic', 'com.readio.basic1year', 'com.readio.basic.lifetime', 'com.readio.pro', 'com.readio.pro1year', 'com.readio.pro.lifetime', '初级会员', '高级会员', 'Basic Member', 'Pro Member', '5 books', '5 本书', '20', '8 hours', '8 小时', '4 hours', '4 小时', '2 hours', '2 小时', 'Microsoft Max', '微软 Max']) {
+    assert.ok(membership.includes(term), term);
+  }
+  for (const term of ['初级会员一个月', '初级会员一年', '高级会员一个月', '高级会员一年', '24 hours', '24 小时', 'com.readio.basic.lifetime', 'do not auto-renew', '不会自动续费', 'Restore Purchases', '恢复购买']) {
+    assert.ok(renewal.includes(term), term);
+  }
+  assert.ok(!/黄金会员|钻石会员|6个月|8元|42元|75元|16元|84元|150元/.test(membership + renewal));
 });
 test('all three generated HTML files are up to date', () => {
   for (const script of ['build-html.cjs', 'build-legal.cjs']) {

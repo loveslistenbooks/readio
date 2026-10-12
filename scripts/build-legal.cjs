@@ -30,7 +30,7 @@ function configLink(key, text, attrs = '', language) {
 function rich(text, language) {
   return esc(text).replace(/\{\{(\w+)\}\}/g, (_, token) => {
     if (token === 'contact') return configLink('supportEmail', esc(config.supportEmail), 'data-show-email', language);
-    if (['privacy', 'terms'].includes(token)) return configLink(`${token}URL`, esc(content.ui[language][token]), '', language);
+    if (['privacy', 'terms', 'membership', 'autoRenewal'].includes(token)) return configLink(`${token}URL`, esc(content.ui[language][token]), '', language);
     const link = content.links[token];
     if (!link || !links.secureURL(link.href)) throw new Error(`Unknown or unsafe legal link: ${token}`);
     return `<a href="${esc(link.href)}" target="_blank" rel="noopener noreferrer">${esc(link[language])}</a>`;
@@ -46,7 +46,8 @@ function blocks(items, language) {
 }
 function render(pageID) {
   const page = content.pages[pageID];
-  const other = pageID === 'privacy' ? 'terms' : 'privacy';
+  const tabs = Object.keys(content.pages).map(id => configLink(`${id}URL`, ui(id), id === pageID ? 'aria-current="page"' : '')).join('\n      ');
+  const related = Object.keys(content.pages).filter(id => id !== pageID).map(id => configLink(`${id}URL`, ui(id) + icon('arrow'))).join('');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -91,8 +92,7 @@ function render(pageID) {
       <div class="legal-meta"><span>${ui('updated')} <span aria-hidden="true">·</span> ${ui('date', 'time', `datetime="${content.updated}"`)}</span>${ui('scope', 'span', 'class="legal-scope"')}</div>
     </div>
     <nav class="legal-tabs" ${aria('navLabel')}>
-      ${configLink('privacyURL', ui('privacy'), pageID === 'privacy' ? 'aria-current="page"' : '')}
-      ${configLink('termsURL', ui('terms'), pageID === 'terms' ? 'aria-current="page"' : '')}
+      ${tabs}
     </nav>
     <ul class="legal-highlights">
       ${page.en.summary.map((item, index) => `<li><span class="legal-highlight-icon">${icon(item.icon)}</span><div>${label(item.title, page.zh.summary[index].title, 'h2')}${label(item.body, page.zh.summary[index].body, 'p')}</div></li>`).join('\n      ')}
@@ -108,7 +108,7 @@ function render(pageID) {
         </details>
       </aside>
       <article class="legal-article" id="legal-content" tabindex="-1">
-        ${label(page.en.intro, page.zh.intro, 'p', 'class="legal-intro"')}
+        <p class="legal-intro">${languages.map(language => `<span data-legal-lang="${language}" lang="${locale(language)}">${rich(page[language].intro, language)}</span>`).join('')}</p>
         ${page.sections.map((section, i) => `<section class="legal-section" id="${section.id}" tabindex="-1">
           <div class="legal-section-heading"><span class="legal-section-number" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h2>${languages.map(language => `<span data-legal-lang="${language}" lang="${locale(language)}">${esc(section[language].title)}</span>`).join('')}</h2></div>
           ${languages.map(language => `<div class="legal-copy" data-legal-lang="${language}" lang="${locale(language)}">${blocks(section[language].blocks, language)}</div>`).join('\n          ')}
@@ -120,7 +120,7 @@ function render(pageID) {
           ${configLink('supportEmail', esc(config.supportEmail), 'class="legal-email" data-show-email')}
           ${ui('emailNote', 'p', 'class="legal-email-note"')}
         </div>
-        <div class="legal-related">${configLink(`${other}URL`, ui(other) + icon('arrow'))}<a href="#top">${ui('top')}${icon('arrow')}</a></div>
+        <div class="legal-related"><div class="legal-related-docs">${related}</div><a href="#top">${ui('top')}${icon('arrow')}</a></div>
       </article>
     </div>
   </main>
