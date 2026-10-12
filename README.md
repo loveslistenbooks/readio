@@ -64,8 +64,3 @@ Readio is a reading and listening app for iPhone and iPad. Import books you own 
 
 Readio is not a subscription book catalog. Start with TXT or EPUB. MOBI is converted on import. PDF currently saves the original file and is not advertised as full reading or TTS. Offline reading applies to downloaded books in supported formats. Offline listening needs a suitable engine and its resources. AI output can be imperfect, and external providers may charge separately.
 
-## 维护这个仓库
-
-预览、修改文案、更新协议和部署 GitHub Pages 的说明，见 [DEVELOPMENT.md](DEVELOPMENT.md)。
-
-联系：listenbook999@outlook.com
